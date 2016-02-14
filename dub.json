@@ -1,0 +1,9 @@
+{
+    "name": "tckeyex",
+    "targetType": "dynamicLibrary",
+    "description": "A minimal D application.",
+    "copyright": "Copyright 2016, idtong",
+    "authors": ["idtong"],
+    "sourceFiles": ["source/app.def"],
+    "dependencies": { "wind": { "path": "thirdparty/wind" } }
+}

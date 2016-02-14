@@ -1,0 +1,10 @@
+LIBRARY     tckeyex
+DESCRIPTION 'tc hotkey extend'
+EXETYPE     NT
+CODE        PRELOAD DISCARDABLE
+DATA        WRITE
+
+EXPORTS
+    ContentGetSupportedField
+    ContentGetValue
+
