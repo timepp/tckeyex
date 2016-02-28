@@ -1,0 +1,212 @@
+* Introduction
+  ~tckeyex~ is a WDX plugin that brings VIM-style hotkeys to TC. For example, with ~tckeyex~ you can
+  use =j/k/h/l/gg/G= to move cursor, use =dd= to delete files, ...
+
+  Most VIM-style hotkeys are normal (alphabet and number) keys, that conflicts with TC's
+  quick-search feature. So after installing ~tckeyex~, keep in mind that: you must press '/' first
+  to activate the quick search.
+
+  ~tckeyex~ affects only when one of the 2 file list panels is focused. i.e. it won't affect other
+  popup dialogs.
+
+* How it works
+  ~tckeyex~ listens all keyboard events in TC and process interested key sequence prior to TC. If a
+  key sequence is processed by ~tckeyex~, TC won't be able to see it. 
+
+  ~tckeyex~ requires TC to load it at startup. In order to achieve this, you need some manual steps
+  after install the plugin (see "Installation").
+
+* Installation
+  1. open zip archieve in TC, TC will install a WDX plugin for you.
+  2. Configuration -> Color, click "Define colors by file type...".
+  3. In the new dialog, click "Add...".
+  4. In the new dialog, click "Define...".
+  5. Go to "plugin" tab, input as following:
+     - Plugin: tckeyex
+     - Property: tvmstart
+     - OP: >
+     - Value: 100
+  6. Click "save". Give it a name in the new dialog.
+  7. Click "OK" 4 times to close all popup dialogs.
+  8. Restart TC.
+
+* Default key bindings
+  Below is the default key bindings. You can edit them in ~tckeyex.ini~ (see "Advanced").
+  | key sequence   | function                     | notes                                                           |
+  |----------------+------------------------------+-----------------------------------------------------------------|
+  | j,k,h,l        | move                         | h and l are only meaningful in =tree view= and =thumbnail view= |
+  | gg, G          | move                         |                                                                 |
+  | ctrl+f,ctrl+b  | move                         | hides the original TC hotkeys                                   |
+  | //             | open quick search            |                                                                 |
+  | v              | visual mode                  | the selection is stop by the first non-movement key.            |
+  | yy             | copy file(s)                 |                                                                 |
+  | dd             | delete files(s)              |                                                                 |
+  | Y              | copy file path               |                                                                 |
+  | u              | go back                      |                                                                 |
+  | ctrl+r         | go forward                   | hides the original TC hotkey                                    |
+  | r              | rename                       |                                                                 |
+  | a              | create new file              |                                                                 |
+  | m              | context menu                 |                                                                 |
+  |----------------+------------------------------+-----------------------------------------------------------------|
+  | ot,oo,of,ob,oc | switch view type             | t=tree, o=thumbnail, f=full, b=brief, c=comment                 |
+  | om             | custom view menu             |                                                                 |
+  | o1,o2,o3,o4,o5 | the nth custom view          |                                                                 |
+  |----------------+------------------------------+-----------------------------------------------------------------|
+  | tl,th          | next/previous tab            |                                                                 |
+  | tt             | new tab                      |                                                                 |
+  | tw             | close current tab            |                                                                 |
+  | t1,t2,t3...t9  | switch to nth tab            |                                                                 |
+  | tm             | open current tab menu        |                                                                 |
+  |----------------+------------------------------+-----------------------------------------------------------------|
+  | w1,w2...w9     | splitter at 11%, 22%...100%  |                                                                 |
+  | w0             | splitter at 0%               |                                                                 |
+  | wj,wk          | move splitter up/down 10%    | only works when the 2 panel is splitted vertically              |
+  | wh,wl          | move splitter left/right 10% | only works when the 2 panel is splitted horizontally            |
+  | w{SPACE}       | enlarge source window to 80% |                                                                 |
+  | wm             | open splitter context menu   |                                                                 |
+  | wr             | toggle split direction       | horizontal or vertical                                          |
+  |----------------+------------------------------+-----------------------------------------------------------------|
+  | sn,st,se,ss    | sort                         | n=name, t=time, e=ext, s=size                                   |
+  | S              | unsort                       |                                                                 |
+
+* Compare with other related tools
+** TWinKey
+   It supports more other features than ~tckeyex~. but it doesn't support key sequence like =gg=
+
+** viatc 
+   viatc installs system levle keyboard hook, while tckeyex only install keyboard hook on TC main
+   thread. global keyboard hook may affect the system performance; so ~tckeyex~ is a cleaner
+   solution.
+
+   viatc key bindings are not customizalbe.
+
+* Advanced
+** customization
+   All key bindings are customizable by directly edit the Configuration file ~tckeyex.ini~. This
+   file is in the same folder as ~tckeyex.dll~.
+
+   Key bindings are under =keysequence= section, in the following format:
+
+   =key sequence= = =action= =params=
+
+** key sequence syntax
+   ~key press~ contains a primary key, together with 0 or more modifiers. The
+   modifiers are: {CONTROL}, {ALT}, {SHIFT}, {LWIN} and {RWIN}. e.g.
+   - =j=
+   - ={CONTROL}+g=
+   - ={CONTROL}{ALT}q=
+   - ={CONTROL}{ALT}= here ={ALT}= becomes the "primary key" and ={CONTROL}= is the modifier.
+   - ={ALT}+{SHIFT}+f=
+   The "+" sign between the primary key and modifiers is purely for readability. It an always be
+   omitted.
+
+   ~key sequence~ is either a single key press, or a join of multiple key presses. e.g.:
+   - =j= is a single key press.
+   - ={CONTROL}+r= is still a single key press.
+   - =wl= is a join of two key presses: press =w=, then =l=.
+   - ={CONTROL}g{ALT}rp= is a join of 3 key presses: press =ctrl+g=, then =alt+r=, then =p=.
+   - ={CONTROL}{ALT}r= is a single key press: ctrl+alt+r
+   - ={CONTROL},{ALT}r= is a join of 2 key presses: press =ctrl= first, then =alt+r=. Here
+     comma(",") is used to resolve any ambiguous.
+
+   The ~primary key~ and ~modifier~ are enclosed with "{" and "}". However, if the primary key is
+   alphabet or number, the bracket can be omitted. e.g.
+   - ={DELETE}=
+   - ={RETURN}=
+   - ={f}= and =f= are the same
+
+** key names
+   Following are most supported key names. They are almost the same as specified in
+   [[https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731%28v=vs.85%29.aspx][this MSDN page]] (except the "VK_" prefix):
+   | Key name           | notes            |
+   |--------------------+------------------|
+   | LEFT,UP,RIGHT,DOWN | cursor movements |
+   | HOME               |                  |
+   | END                |                  |
+   | PRIOR              |                  |
+   | NEXT               |                  |
+   |--------------------+------------------|
+   | SHIFT              |                  |
+   | CONTROL            |                  |
+   | MENU(ALT)          |                  |
+   | LWIN, RWIN         |                  |
+   |--------------------+------------------|
+   | BACK               |                  |
+   | TAB                |                  |
+   | RETURN(ENTER)      |                  |
+   | PAUSE              |                  |
+   | SPACE              |                  |
+   | INSERT             |                  |
+   | DELETE             |                  |
+   | ESCAPE             |                  |
+   |--------------------+------------------|
+   | SCROLL             |                  |
+   | CAPITAL            |                  |
+   | NUMLOCK            |                  |
+   | F1..F24            |                  |
+   |--------------------+------------------|
+   | NUMPAD0..NUMPAD9   |                  |
+   | NUMPAD_MULTIPLY    |                  |
+   | NUMPAD_ADD         |                  |
+   | NUMPAD_SEPARATOR   |                  |
+   | NUMPAD_SUBTRACT    |                  |
+   | NUMPAD_DECIMAL     |                  |
+   | NUMPAD_DIVIDE      |                  |
+   |--------------------+------------------|
+   | SEMICOLON          |                  |
+   | EQUAL              |                  |
+   | COMMA              |                  |
+   | MINUS              |                  |
+   | PERIOD             |                  |
+   | DIVIDE             |                  |
+   | BACKQUOTE          |                  |
+   | OPEN_BRACKET       |                  |
+   | CLOSE_BRACKET      |                  |
+   | SINGLEQUOTE        |                  |
+   
+   You can also use the vk code directly inside "{" and "}", if its key name is not listed above.
+
+** actions
+   There are 3 types of actions:
+   - cm_xxx, e.g. cm_Delete
+   - cmn_xxx, TC command ID. e.g. cmn_300 equals to cm_SrcComments
+   - ecm_xxx params, see below for all available commands.
+** ecm actions
+*** ecm_MoveCursorXXX
+    move cursor position. 
+    - ecm_MoveCursorDown
+    - ecm_MoveCursorUp
+    - ecm_MoveCursorLeft
+    - ecm_MoveCursorRight
+    - ecm_MoveCursorTop
+    - ecm_MoveCursorBottom
+    - ecm_MoveCursorPagedown
+    - ecm_MoveCursorPageup
+
+*** ecm_SelectDown
+*** ecm_SelectUp
+*** ecm_PrepareForSelection
+    Following movement actions are converted to selections. Following non-movement keys stop this
+    conversion.
+
+*** ecm_SendKey keysequence
+    Directly send key to TC active panel. e.g. =ecm_SendKey {SHIFT}{F4}= will cause TC opens new
+    file dialog to edit.
+
+*** ecm_CustomView n
+    Switch to the nth custom view.
+    
+*** ecm_ResizePanel target amount
+    - target: left/right/focus/top/bottom/panel1/panel2
+    - amount: 
+      + absolute: n, %n 
+      + relative: +n, -n, +%n, -%n 
+    examples:
+    - =ecm_ResizePanel left 111= resize left panel to 111 pixel
+    - =ecm_ResizePanel focus 10%= resize the focus panel to 10% width
+    - =ecm_ResizePanel right +100= enlarge the width of right panel by 100 pixel
+
+* TODO
+** vim key in lister
+** M: open folder context menu
+   approach: find the path panel and send WM_RBUTTONUP

@@ -5,5 +5,7 @@
     "copyright": "Copyright 2016, idtong",
     "authors": ["idtong"],
     "sourceFiles": ["source/app.def"],
-    "dependencies": { "wind": { "path": "thirdparty/wind" } }
+    "dependencies": {
+        "wind": { "path": "thirdparty/wind" }
+    }
 }

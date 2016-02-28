@@ -4,7 +4,11 @@ __dummy.html
 *.o
 *.obj
 *.dll
+*.dll_cv
 *.sln
 *.visualdproj
 .vs
-
+*.wdx
+*.wdx64
+*.pdb
+readme.html

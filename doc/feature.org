@@ -1,37 +1,17 @@
-* concepts
-- ini file
-- <key>=<command>
-- command
-  - ecm_xxx <param>
-  - cm_xxx
-  - <number>
-
 * vim binding keys
 ** j,k,h,l: move down,up,left,right
 =h= and =l= are meaningful in ~tree view~ and ~thumbnail view~ 
 ** / : open quick search box
-** f : wait the next char and do "letter only" quick search
-note to make this key work properly, you need to set "quick search" to "letter only"
-in TC options. (don't worry, quick searh box still works after doing so)
 ** gg,G: move top, bottom
-note =G= conflicts with another TC rule: shift + (move command) = select.
-however, this is not a problem because:
-1. it's not a common case to select from cursor to bottom
-2. if you do want such selection, you can use =vG=
-** v,V : prepare for selection
+** v : visual mode (prepare for selection)
 if followed by a movement, then items between cursor and move target will be selected.
 the selection is stop by the first non-movement key.
 ** yy,dd: copy,delete
 ** Y: copy file path to clip board
 ** u,ctrl+r: go back/forward
-note =ctrl+r= overrides TC's default mapping
+note =ctrl+r= overrides TC's default mapping (refresh)
 ** r: rename
-other candidates:
-cw: also didn't match perfectly but one more key need to press
 ** a: new file
-other candidates:
-o: may be a better choice
-** ctrl+z: minimize TC
 ** bindings for TC specific features
 *** switch view type
 ot: tree view
@@ -48,27 +28,15 @@ o1, o2, o3... : the nth custom view
 *** sn,st,se,ss: sort (by name,time,extension,size)
 there is no default vim key binding about sort. and ~:sort~ is not convenient.
 *** splits
-**** w1..w9: split from 0/100 to 100/0
-w1: 0/100
-w2: 
-...
-w9: 100/0
-**** w0,w^,wgg: split 0/100
-treat splitter as the cursor position, so 0,^ will go to begin of line
-and the splitter can be vertical, then is reasonalbe to also use gg as begin of file
-**** w$,wG: split 100/0
+**** w1..w9: split 11/100, 22/100, ... 100/100
+**** w0: split 0/100
 **** wj,wk,wh,wl: move splitter left,right,up,down by 1/10 client area
-*** key sequence for go to specific folder
-will it be convenient to use key sequence to access specific folder?
-we should let it customizable to use any keyboard to go to any folder.
+**** w{SPACE}: enlarge source window to 80%
+**** wm: open splitter context menu
+**** wr: toggle between horizontal mode and vertical mode
 * ecm commands
 ** ecm_sendkey
 
-* key format
-WCAS+F      win+ctrl+alt+shift+F
-F,D         F then D
-C+F,C+K     ctrl+F, then ctrl+K
-C+,C+       ctrl, then ctrl (double click control)
 * compare with other related tools
 ** TWinKey
 support many other functions. but it doesn't support key sequence like =gg=
@@ -80,3 +48,6 @@ viatc key bindings are not customizalbe. it won't make big trouble to programmer
 though -- they can modify its source.
 * TODO
 ** vim key in lister
+** M: open folder context menu
+   approach: find the path panel and send WM_RBUTTONUP
+

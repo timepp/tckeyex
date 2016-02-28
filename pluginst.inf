@@ -1,0 +1,7 @@
+[plugininstall]
+description=Content plugin to extend TC key binding to VIM style
+type=wdx
+file=tckeyex.wdx
+file=tckeyex.wdx64
+file=tckeyex.ini
+defaultdir=tckeyex
