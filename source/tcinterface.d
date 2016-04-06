@@ -256,15 +256,16 @@ void openSplitMenu()
 }
 
 /******************************************
- * TODO: doesn't work yet
+ * Open folder context menu
  */
 void openDirectoryMenu(HWND hwnd)
 {
     ensureWindowInformation();
     HWND path = (hwnd.rect.rectRelationShip(splitter.rect) & (RR.Left | RR.Above)) ? path1 : path2;
     RECT rc = path.rect;
-    int lparam = ((rc.height() / 2) << 16) | (rc.width() / 2);
+    int lparam = ((rc.height() / 2) << 16);
     log("send", lparam, " to ", path);
-    SendMessageW(path, WM_RBUTTONUP, 0, lparam);
+    PostMessageW(path, WM_RBUTTONDOWN, 0, lparam);
+    PostMessageW(path, WM_RBUTTONUP, 0, lparam);
 }
 
