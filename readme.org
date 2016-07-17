@@ -46,7 +46,8 @@
   | ctrl+r         | go forward                   | hides the original TC hotkey                                    |
   | r              | rename                       |                                                                 |
   | a              | create new file              |                                                                 |
-  | m              | context menu                 |                                                                 |
+  | m              | context menu: selected file  |                                                                 |
+  | M              | context menu: current folder |                                                                 |
   |----------------+------------------------------+-----------------------------------------------------------------|
   | ot,oo,of,ob,oc | switch view type             | t=tree, o=thumbnail, f=full, b=brief, c=comment                 |
   | om             | custom view menu             |                                                                 |
@@ -208,5 +209,3 @@
 
 * TODO
 ** vim key in lister
-** M: open folder context menu
-   approach: find the path panel and send WM_RBUTTONUP
