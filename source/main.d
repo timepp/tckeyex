@@ -127,6 +127,7 @@ void Initialize()
 
     log(g_inifile, g_keyMap);
     log("thread id:", g_mainThreadID, " TCDIR:", g_TCDIR);
+    log("key hook handle:", g_hookKeyboard);
     log(g_tcCommandIdMap);
 }
 

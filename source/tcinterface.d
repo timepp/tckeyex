@@ -228,7 +228,11 @@ void resizePanel(string args)
 
 bool isFileList(HWND hwnd)
 {
-    return checkClassName(hwnd, "TMyListBox"w.ptr);
+    // 9.0+: LCLListBox
+
+    WCHAR[100] clsname;
+    GetClassNameW(hwnd, clsname.ptr, clsname.length);
+    return wcscmp(clsname.ptr, "TMyListBox"w.ptr) == 0 || wcscmp(clsname.ptr, "LCLListBox"w.ptr) == 0;
 }
 
 void switchCustomView(HWND hwnd, int view)
